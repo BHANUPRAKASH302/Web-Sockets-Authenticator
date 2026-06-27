@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Multi-Domain AI Assistant — WebSocket Controller</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="glow-bg bg-1"></div>
+  <div class="glow-bg bg-2"></div>
+
+  <div class="app-container">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="logo-area">
+        <span class="logo-icon">🔮</span>
+        <div>
+          <h1>Vynedam AI</h1>
+          <p class="subtitle">Multi-Domain AI Assistant • WebSocket Panel</p>
+        </div>
+      </div>
+      <div class="status-panel">
+        <div class="telemetry">
+          <span class="telemetry-item">Latency: <strong id="latency-val">-- ms</strong></span>
+          <span class="telemetry-item">Uptime: <strong id="uptime-val">-- s</strong></span>
+        </div>
+        <div class="status-indicator-wrapper">
+          <span class="status-dot disconnected" id="conn-dot"></span>
+          <span class="status-text" id="conn-text">Disconnected</span>
+        </div>
+        <button id="reconnect-btn" class="btn btn-outline" style="display: none;">Reconnect</button>
+      </div>
+    </header>
+
+    <div class="main-layout">
+      <!-- Sidebar Navigation -->
+      <aside class="sidebar">
+        <nav class="nav-menu">
+          <button class="nav-item active" data-tab="dashboard">
+            <span class="nav-icon">📊</span>
+            <span class="nav-label">Dashboard</span>
+          </button>
+          <button class="nav-item" data-tab="healthcare">
+            <span class="nav-icon">🩺</span>
+            <span class="nav-label">Healthcare</span>
+          </button>
+          <button class="nav-item" data-tab="agriculture">
+            <span class="nav-icon">🌾</span>
+            <span class="nav-label">Agriculture</span>
+          </button>
+          <button class="nav-item" data-tab="legal">
+            <span class="nav-icon">⚖️</span>
+            <span class="nav-label">Legal Guidance</span>
+          </button>
+          <button class="nav-item" data-tab="education">
+            <span class="nav-icon">🎓</span>
+            <span class="nav-label">Education</span>
+          </button>
+          <button class="nav-item" data-tab="safety">
+            <span class="nav-icon">🚨</span>
+            <span class="nav-label">SafeGuard / SOS</span>
+          </button>
+          <button class="nav-item" data-tab="jarvis">
+            <span class="nav-icon">💬</span>
+            <span class="nav-label">JARVIS / AI Chat</span>
+          </button>
+        </nav>
+      </aside>
+
+      <!-- Main Content Panel -->
+      <main class="content-panel">
+        <!-- DASHBOARD TAB -->
+        <section id="tab-dashboard" class="tab-content active-content">
+          <div class="tab-header">
+            <h2>System Overview</h2>
+            <p>Real-time health statistics, latency monitoring, and domain connections.</p>
+          </div>
+          
+          <div class="metrics-grid">
+            <div class="metric-card">
+              <div class="metric-icon">🔌</div>
+              <div class="metric-details">
+                <h3>WS Endpoint</h3>
+                <p class="metric-value">ws://localhost:8080</p>
+              </div>
+            </div>
+            <div class="metric-card">
+              <div class="metric-icon">🏥</div>
+              <div class="metric-details">
+                <h3>Prescripto</h3>
+                <p class="metric-value" id="healthcare-status">Ready</p>
+              </div>
+            </div>
+            <div class="metric-card">
+              <div class="metric-icon">🚜</div>
+              <div class="metric-details">
+                <h3>AgroGen</h3>
+                <p class="metric-value" id="agriculture-status">Ready</p>
+              </div>
+            </div>
+            <div class="metric-card">
+              <div class="metric-icon">📜</div>
+              <div class="metric-details">
+                <h3>LawGen</h3>
+                <p class="metric-value" id="legal-status">Ready</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="dashboard-widgets">
+            <div class="widget-card chat-preview-widget">
+              <h3>Real-Time Live Debug Console</h3>
+              <div class="console-box" id="debug-console">
+                <div class="console-line system">[System] Welcome to Vynedam WebSocket Dashboard. Waiting for connection...</div>
+              </div>
+              <div class="console-actions">
+                <button class="btn btn-sm btn-outline" id="clear-console-btn">Clear Logs</button>
+                <button class="btn btn-sm btn-accent" id="ping-btn">Ping Server</button>
+              </div>
+            </div>
+
+            <div class="widget-card quick-info-widget">
+              <h3>App Capabilities</h3>
+              <ul class="features-list">
+                <li><strong>Healthcare:</strong> Live booking requests, slots updates and doctor profiles query.</li>
+                <li><strong>Agriculture:</strong> Real-time crop analysis recommendations, weather forecast updates, market prices.</li>
+                <li><strong>Legal:</strong> Interactive laws lookup database, search advocates, documents drafts generator.</li>
+                <li><strong>Learning:</strong> Instant grading system for courses, feedback logs.</li>
+                <li><strong>SafeGuard:</strong> Emergency SOS trigger broadcast, simulated client location coordinate tracking.</li>
+                <li><strong>JARVIS / AI:</strong> Live chat streaming responses over WS protocol.</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- HEALTHCARE TAB -->
+        <section id="tab-healthcare" class="tab-content">
+          <div class="tab-header">
+            <h2>🩺 Healthcare (Prescripto)</h2>
+            <p>Book instant appointments with qualified medical experts and track medical schedules.</p>
+          </div>
+
+          <div class="split-view">
+            <!-- Doctor Grid -->
+            <div class="card-column main-column">
+              <h3>Available Doctors</h3>
+              <div class="grid-list" id="doctors-grid">
+                <p class="info-text">Fetching doctors list from WebSocket server...</p>
+              </div>
+            </div>
+
+            <!-- Booking Section -->
+            <div class="card-column side-column">
+              <div class="glass-card flex-form">
+                <h3>Book Appointment</h3>
+                <form id="book-doctor-form">
+                  <div class="form-group">
+                    <label for="booking-doctor-select">Select Doctor</label>
+                    <select id="booking-doctor-select" required>
+                      <option value="">-- Choose Doctor --</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="booking-patient-name">Patient Name</label>
+                    <input type="text" id="booking-patient-name" placeholder="Enter patient name" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="booking-date">Appointment Date</label>
+                    <input type="datetime-local" id="booking-date" required>
+                  </div>
+                  <button type="submit" class="btn btn-accent btn-block">Confirm Appointment</button>
+                </form>
+              </div>
+
+              <div class="glass-card current-bookings">
+                <h3>Active Bookings</h3>
+                <div class="bookings-list" id="bookings-list">
+                  <p class="info-text">No active bookings found.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- AGRICULTURE TAB -->
+        <section id="tab-agriculture" class="tab-content">
+          <div class="tab-header">
+            <h2>🌾 Agriculture (AgroGen)</h2>
+            <p>Check regional crop health, query weather forecasts, buy products, and explore schemes.</p>
+          </div>
+
+          <div class="split-view">
+            <!-- Left Side: Weather and Products -->
+            <div class="card-column main-column flex-column-gap">
+              <div class="glass-card">
+                <h3>Live Weather Forecast</h3>
+                <div class="weather-row" id="weather-row">
+                  <p class="info-text">Loading forecast...</p>
+                </div>
+              </div>
+
+              <div class="glass-card">
+                <h3>Agricultural Products Market</h3>
+                <div class="market-grid" id="market-grid">
+                  <p class="info-text">Loading market data...</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right Side: Crop Advisory & Details -->
+            <div class="card-column side-column flex-column-gap">
+              <div class="glass-card">
+                <h3>Crop Health Advisor</h3>
+                <form id="crop-advisor-form">
+                  <div class="form-group">
+                    <label for="crop-name">Crop Name</label>
+                    <input type="text" id="crop-name" placeholder="e.g., Rice, Wheat, Cotton" required>
+                  </div>
+                  <button type="submit" class="btn btn-primary btn-block">Analyze Crop Health</button>
+                </form>
+                <div id="crop-analysis-result" class="analysis-box" style="display: none;"></div>
+              </div>
+
+              <div class="glass-card">
+                <h3>Active Schemes</h3>
+                <div class="schemes-list" id="schemes-list">
+                  <p class="info-text">Loading schemes...</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- LEGAL TAB -->
+        <section id="tab-legal" class="tab-content">
+          <div class="tab-header">
+            <h2>⚖️ Legal Guidance (LawGen)</h2>
+            <p>Access legal resources, search the Indian Penal Codes, read documents drafts, and query active cases.</p>
+          </div>
+
+          <div class="split-view">
+            <!-- Main side: search and library -->
+            <div class="card-column main-column flex-column-gap">
+              <div class="glass-card">
+                <h3>Search Laws & BNS / IPC Codes</h3>
+                <div class="search-box-row">
+                  <input type="text" id="law-search-input" placeholder="Search by section or keyword (e.g. Murder, Theft, 420)...">
+                  <button id="law-search-btn" class="btn btn-primary">Search</button>
+                </div>
+                <div class="search-results-box" id="law-search-results">
+                  <p class="info-text">Enter search term and press Search.</p>
+                </div>
+              </div>
+
+              <div class="glass-card">
+                <h3>Law Library Categories</h3>
+                <div class="categories-flex" id="law-categories">
+                  <p class="info-text">Loading categories...</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Side column: advocates & docs -->
+            <div class="card-column side-column flex-column-gap">
+              <div class="glass-card">
+                <h3>Senior Advocates</h3>
+                <div class="advocates-list" id="advocates-list">
+                  <p class="info-text">Loading advocates...</p>
+                </div>
+              </div>
+
+              <div class="glass-card">
+                <h3>Legal Document Templates</h3>
+                <div class="docs-list" id="legal-docs-list">
+                  <p class="info-text">Loading documents...</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- EDUCATION TAB -->
+        <section id="tab-education" class="tab-content">
+          <div class="tab-header">
+            <h2>🎓 Education & Learning</h2>
+            <p>Learn core subjects, take interactive tests graded instantly via WebSockets, and check course details.</p>
+          </div>
+
+          <div class="split-view">
+            <!-- Courses List -->
+            <div class="card-column main-column flex-column-gap">
+              <div class="glass-card">
+                <h3>Your Enrolled Courses</h3>
+                <div class="courses-list" id="courses-list">
+                  <p class="info-text">Loading courses...</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Quiz Section -->
+            <div class="card-column side-column">
+              <div class="glass-card" id="quiz-widget">
+                <h3>Select a course to start a WebSocket-graded test.</h3>
+                <div id="quiz-box" style="display: none;">
+                  <h4 id="quiz-question-title">Question 1</h4>
+                  <div class="quiz-options" id="quiz-options-list"></div>
+                  <div class="quiz-footer">
+                    <button class="btn btn-sm btn-outline" id="prev-question" style="display: none;">Previous</button>
+                    <button class="btn btn-sm btn-accent" id="next-question">Next</button>
+                    <button class="btn btn-sm btn-accent" id="submit-quiz" style="display: none;">Submit Exam</button>
+                  </div>
+                </div>
+                <div id="quiz-result-box" class="quiz-result" style="display: none;"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SAFETY TAB -->
+        <section id="tab-safety" class="tab-content">
+          <div class="tab-header">
+            <h2>🚨 SafeGuard / Safety SOS</h2>
+            <p>Send instant SOS warnings to family members and track coordinates in real-time.</p>
+          </div>
+
+          <div class="split-view">
+            <!-- SOS Trigger -->
+            <div class="card-column main-column flex-column-gap">
+              <div class="glass-card sos-panic-box">
+                <h3>SOS Emergency Panic Button</h3>
+                <p>Press the button below to broadcast emergency warning to your safety circles. Your coordinates will stream continuously.</p>
+                <div class="panic-btn-wrapper">
+                  <button id="sos-btn" class="btn-panic">SOS</button>
+                </div>
+                <div id="sos-alert-status" class="alert-status-box" style="display: none;"></div>
+              </div>
+
+              <div class="glass-card">
+                <h3>Live Location Coordinates Streamer</h3>
+                <div class="location-stream-controls">
+                  <button id="stream-loc-btn" class="btn btn-primary">Start Real-time Simulation Stream</button>
+                  <button id="stop-loc-btn" class="btn btn-danger" style="display: none;">Stop Stream</button>
+                </div>
+                <div id="location-telemetry" class="telemetry-dashboard" style="display: none;">
+                  <div class="telemetry-grid">
+                    <div class="t-cell">Latitude: <span id="lat-val">--</span></div>
+                    <div class="t-cell">Longitude: <span id="lng-val">--</span></div>
+                    <div class="t-cell">Speed: <span id="speed-val">--</span> km/h</div>
+                    <div class="t-cell">Packets Sent: <span id="packets-val">0</span></div>
+                  </div>
+                  <div class="radar-dot-wrapper">
+                    <div class="radar-circle"></div>
+                    <div class="radar-circle circle-2"></div>
+                    <div class="radar-pulse"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Contacts and Zones -->
+            <div class="card-column side-column flex-column-gap">
+              <div class="glass-card">
+                <h3>Emergency Contacts</h3>
+                <div class="contacts-list" id="safety-contacts">
+                  <p class="info-text">Loading contacts...</p>
+                </div>
+              </div>
+
+              <div class="glass-card">
+                <h3>Nearby Safe Zones</h3>
+                <div class="zones-list" id="safe-zones-list">
+                  <p class="info-text">Loading safe zones...</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- JARVIS TAB -->
+        <section id="tab-jarvis" class="tab-content">
+          <div class="tab-header">
+            <h2>💬 JARVIS / AI Streaming Assistant</h2>
+            <p>Communicate with your AI model. Experience word-by-word real-time text streaming and text-to-speech feedback.</p>
+          </div>
+
+          <div class="chat-container">
+            <!-- Sidebar with session & TTS controls -->
+            <div class="chat-sidebar">
+              <div class="chat-config-group">
+                <label for="ai-engine">Select Engine</label>
+                <select id="ai-engine">
+                  <option value="JARVIS">JARVIS Voice Assistant</option>
+                  <option value="Ollama">Ollama Chatbot</option>
+                </select>
+              </div>
+              <div class="chat-config-group">
+                <label for="ai-speech-feedback">TTS Voice Output</label>
+                <div class="toggle-switch-wrapper">
+                  <input type="checkbox" id="ai-speech-feedback" checked>
+                  <span class="toggle-label">Enabled</span>
+                </div>
+              </div>
+              <div class="session-info">
+                <span>Session:</span>
+                <code id="chat-session-id">--</code>
+              </div>
+            </div>
+
+            <!-- Chat screen -->
+            <div class="chat-main">
+              <div class="chat-messages" id="chat-message-list">
+                <div class="chat-msg system">
+                  <div class="avatar">⚙️</div>
+                  <div class="text-content">Connected to AI gateway. Ready to chat.</div>
+                </div>
+              </div>
+              
+              <form id="chat-input-form" class="chat-input-row">
+                <input type="text" id="chat-input" placeholder="Type your message to JARVIS..." autocomplete="off" required>
+                <button type="submit" class="btn btn-accent btn-send" id="chat-send-btn">
+                  <span>Send</span>
+                  <span class="send-icon">➔</span>
+                </button>
+              </form>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <!-- Dialog for Booking Confirmation Details -->
+  <dialog id="booking-success-dialog" class="glass-dialog">
+    <div class="dialog-content">
+      <span class="dialog-icon">✅</span>
+      <h3>Appointment Confirmed!</h3>
+      <p id="dialog-booking-details">Your appointment details will appear here.</p>
+      <button class="btn btn-primary" id="close-dialog-btn">Great, thanks!</button>
+    </div>
+  </dialog>
+
+  <!-- JS -->
+  <script src="app.js"></script>
+</body>
+</html>
