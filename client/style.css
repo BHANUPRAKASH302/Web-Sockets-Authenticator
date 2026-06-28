@@ -2,9 +2,9 @@
 
 :root {
   /* Colors */
-  --bg-darker: #050b18;
-  --bg-dark: #0a1428;
-  --bg-card: rgba(16, 28, 54, 0.45);
+  --bg-darker: #070c15;
+  --bg-dark: #080c16;
+  --bg-card: #0d1527;
   --border-color: rgba(255, 255, 255, 0.08);
   --border-focus: rgba(0, 210, 255, 0.35);
   
@@ -13,7 +13,7 @@
   --text-muted: #53647c;
   
   /* Accent Colors */
-  --accent-blue: #00d2ff;
+  --accent-blue: #0084ff;
   --accent-green: #00e676;
   --accent-purple: #bb86fc;
   --accent-yellow: #ffd600;
@@ -229,9 +229,9 @@ body {
 }
 
 .nav-item.active {
-  background: rgba(0, 210, 255, 0.1);
-  color: var(--accent-blue);
-  border: 1px solid rgba(0, 210, 255, 0.18);
+  background: #1b263b;
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.05);
   font-weight: 600;
 }
 
@@ -1420,3 +1420,183 @@ select:focus {
   0% { width: 0; height: 0; opacity: 1; }
   100% { width: 100%; height: 100%; opacity: 0; }
 }
+
+/* ── MREM LOGO BRANDING & STYLES ────────────────────────────────────────────── */
+
+.logo-frame-circular {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 255, 255, 0.15);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.35);
+  flex-shrink: 0;
+}
+
+.brand-logo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Sidebar Item Logo Containers */
+.nav-icon-logo {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  flex-shrink: 0;
+}
+
+.sidebar-item-logo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* SafeGuard SOS badge icon container */
+.shield-icon-container {
+  font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid rgba(239, 68, 68, 0.25);
+  border-radius: 6px;
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.shield-badge-red {
+  filter: drop-shadow(0 0 4px rgba(239, 68, 68, 0.5));
+}
+
+/* Metric status card logos */
+.metric-card .metric-icon-logo {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.metric-card-logo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.plug-icon {
+  background: rgba(255, 255, 255, 0.02) !important;
+  border: 1px solid rgba(255, 255, 255, 0.05) !important;
+  width: 44px !important;
+  height: 44px !important;
+  font-size: 20px !important;
+  border-radius: 50% !important;
+}
+
+/* Capabilities list styling with plus signs */
+.features-list-plus {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 20px;
+}
+
+.features-list-plus li {
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--text-primary);
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.plus-sign {
+  color: var(--accent-blue);
+  font-weight: 800;
+  font-size: 15px;
+  text-shadow: 0 0 8px rgba(0, 132, 255, 0.6);
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.feature-title {
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+/* Star decorator */
+.quick-info-widget {
+  position: relative;
+  overflow: hidden;
+}
+
+.shiny-star-decor {
+  position: absolute;
+  bottom: 12px;
+  right: 18px;
+  font-size: 28px;
+  color: rgba(255, 255, 255, 0.15);
+  pointer-events: none;
+  filter: drop-shadow(0 0 8px rgba(255,255,255,0.15));
+  animation: starTwinkle 3s infinite alternate ease-in-out;
+}
+
+@keyframes starTwinkle {
+  0% { opacity: 0.3; transform: scale(0.9) rotate(0deg); }
+  100% { opacity: 0.8; transform: scale(1.1) rotate(15deg); }
+}
+
+/* Console buttons styling */
+.btn-outline-console {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--text-secondary);
+  font-size: 12px;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+
+.btn-outline-console:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+}
+
+.btn-accent-console {
+  background: #2563eb;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  color: #fff;
+  font-weight: 600;
+  font-size: 12px;
+  padding: 8px 18px;
+  border-radius: 6px;
+  cursor: pointer;
+  box-shadow: 0 0 12px rgba(37, 99, 235, 0.25);
+  transition: var(--transition-smooth);
+}
+
+.btn-accent-console:hover {
+  box-shadow: 0 0 20px rgba(37, 99, 235, 0.45);
+  background: #3b82f6;
+  transform: translateY(-1px);
+}
+

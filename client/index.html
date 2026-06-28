@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Multi-Domain AI Assistant — WebSocket Controller</title>
+  <title>Vynedam AI — Multi-Domain Intelligent Assistant</title>
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -19,22 +19,24 @@
     <!-- Header -->
     <header class="app-header">
       <div class="logo-area">
-        <span class="logo-icon">🔮</span>
+        <div class="logo-frame-circular">
+          <img src="MREM_Logo.jpeg" alt="MREM Logo" class="brand-logo-img">
+        </div>
         <div>
           <h1>Vynedam AI</h1>
-          <p class="subtitle">Multi-Domain AI Assistant • WebSocket Panel</p>
+          <p class="subtitle">Multi: Domain AI Assistant - WebSocket Panel</p>
         </div>
       </div>
       <div class="status-panel">
         <div class="telemetry">
-          <span class="telemetry-item">Latency: <strong id="latency-val">-- ms</strong></span>
-          <span class="telemetry-item">Uptime: <strong id="uptime-val">-- s</strong></span>
+          <span class="telemetry-item">Latency: <strong id="latency-val">— ms</strong></span>
+          <span class="telemetry-item">Uptime: <strong id="uptime-val">— s</strong></span>
         </div>
         <div class="status-indicator-wrapper">
           <span class="status-dot disconnected" id="conn-dot"></span>
           <span class="status-text" id="conn-text">Disconnected</span>
         </div>
-        <button id="reconnect-btn" class="btn btn-outline" style="display: none;">Reconnect</button>
+        <button id="reconnect-btn" class="btn btn-outline">Reconnect</button>
       </div>
     </header>
 
@@ -47,23 +49,23 @@
             <span class="nav-label">Dashboard</span>
           </button>
           <button class="nav-item" data-tab="healthcare">
-            <span class="nav-icon">🩺</span>
+            <span class="nav-icon-logo"><img src="Prescripto_Logo.jpg" alt="Prescripto Logo" class="sidebar-item-logo-img"></span>
             <span class="nav-label">Healthcare</span>
           </button>
           <button class="nav-item" data-tab="agriculture">
-            <span class="nav-icon">🌾</span>
+            <span class="nav-icon-logo"><img src="Smart_Agriculture_Logo.jpg" alt="Agriculture Logo" class="sidebar-item-logo-img"></span>
             <span class="nav-label">Agriculture</span>
           </button>
           <button class="nav-item" data-tab="legal">
-            <span class="nav-icon">⚖️</span>
+            <span class="nav-icon-logo"><img src="Legal_Assistance_Logo.png" alt="Legal Logo" class="sidebar-item-logo-img"></span>
             <span class="nav-label">Legal Guidance</span>
           </button>
           <button class="nav-item" data-tab="education">
-            <span class="nav-icon">🎓</span>
+            <span class="nav-icon-logo"><img src="MREM_Logo.jpeg" alt="Education Logo" class="sidebar-item-logo-img"></span>
             <span class="nav-label">Education</span>
           </button>
           <button class="nav-item" data-tab="safety">
-            <span class="nav-icon">🚨</span>
+            <span class="nav-icon-logo shield-icon-container"><span class="shield-badge-red">🛡️</span></span>
             <span class="nav-label">SafeGuard / SOS</span>
           </button>
           <button class="nav-item" data-tab="jarvis">
@@ -84,31 +86,31 @@
           
           <div class="metrics-grid">
             <div class="metric-card">
-              <div class="metric-icon">🔌</div>
+              <div class="metric-icon plug-icon">🔌</div>
               <div class="metric-details">
-                <h3>WS Endpoint</h3>
+                <h3>WS ENDPOINT</h3>
                 <p class="metric-value">ws://localhost:8080</p>
               </div>
             </div>
             <div class="metric-card">
-              <div class="metric-icon">🏥</div>
+              <div class="metric-icon-logo"><img src="Prescripto_Logo.jpg" alt="Prescripto Logo" class="metric-card-logo-img"></div>
               <div class="metric-details">
-                <h3>Prescripto</h3>
-                <p class="metric-value" id="healthcare-status">Ready</p>
+                <h3>PRESCRIPTO</h3>
+                <p class="metric-value" id="healthcare-status">Offline</p>
               </div>
             </div>
             <div class="metric-card">
-              <div class="metric-icon">🚜</div>
+              <div class="metric-icon-logo"><img src="Smart_Agriculture_Logo.jpg" alt="Agriculture Logo" class="metric-card-logo-img"></div>
               <div class="metric-details">
-                <h3>AgroGen</h3>
-                <p class="metric-value" id="agriculture-status">Ready</p>
+                <h3>AGROGEN</h3>
+                <p class="metric-value" id="agriculture-status">Offline</p>
               </div>
             </div>
             <div class="metric-card">
-              <div class="metric-icon">📜</div>
+              <div class="metric-icon-logo"><img src="Legal_Assistance_Logo.png" alt="Legal Logo" class="metric-card-logo-img"></div>
               <div class="metric-details">
-                <h3>LawGen</h3>
-                <p class="metric-value" id="legal-status">Ready</p>
+                <h3>LAWGEN</h3>
+                <p class="metric-value" id="legal-status">Offline</p>
               </div>
             </div>
           </div>
@@ -116,25 +118,27 @@
           <div class="dashboard-widgets">
             <div class="widget-card chat-preview-widget">
               <h3>Real-Time Live Debug Console</h3>
-              <div class="console-box" id="debug-console">
+              <div class="console-box filter-all" id="debug-console">
                 <div class="console-line system">[System] Welcome to Vynedam WebSocket Dashboard. Waiting for connection...</div>
               </div>
               <div class="console-actions">
-                <button class="btn btn-sm btn-outline" id="clear-console-btn">Clear Logs</button>
-                <button class="btn btn-sm btn-accent" id="ping-btn">Ping Server</button>
+                <button class="btn btn-sm btn-outline-console" id="clear-console-btn">Clear Logs</button>
+                <button class="btn btn-sm btn-accent-console" id="ping-btn">Ping Server</button>
               </div>
             </div>
 
             <div class="widget-card quick-info-widget">
               <h3>App Capabilities</h3>
-              <ul class="features-list">
-                <li><strong>Healthcare:</strong> Live booking requests, slots updates and doctor profiles query.</li>
-                <li><strong>Agriculture:</strong> Real-time crop analysis recommendations, weather forecast updates, market prices.</li>
-                <li><strong>Legal:</strong> Interactive laws lookup database, search advocates, documents drafts generator.</li>
-                <li><strong>Learning:</strong> Instant grading system for courses, feedback logs.</li>
-                <li><strong>SafeGuard:</strong> Emergency SOS trigger broadcast, simulated client location coordinate tracking.</li>
-                <li><strong>JARVIS / AI:</strong> Live chat streaming responses over WS protocol.</li>
+              <ul class="features-list-plus">
+                <li><span class="plus-sign">+</span> <span class="feature-title">Healthcare:</span> Live booking requests, slots updates and doctor profiles query.</li>
+                <li><span class="plus-sign">+</span> <span class="feature-title">Agriculture:</span> Real-time crop analysis recommendations, weather forecast updates, market prices.</li>
+                <li><span class="plus-sign">+</span> <span class="feature-title">Legal:</span> Interactive laws lookup database, search advocates, documents drafts generator.</li>
+                <li><span class="plus-sign">+</span> <span class="feature-title">Learning:</span> Instant grading system for courses, feedback logs.</li>
+                <li><span class="plus-sign">+</span> <span class="feature-title">SafeGuard:</span> Emergency SOG trigger broadcast, simulated client location coordinate tracking.</li>
+                <li><span class="plus-sign">+</span> <span class="feature-title">JARVIS/ AI:</span> Live chat streaming responses over WS protocol.</li>
               </ul>
+              <!-- Shiny decorative star -->
+              <div class="shiny-star-decor">✦</div>
             </div>
           </div>
         </section>
